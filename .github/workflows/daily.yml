@@ -1,0 +1,24 @@
+name: Daily Config Sync
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update sync timestamp
+        run: |
+          echo "Last sync: $(date -u)" > sync-timestamp.txt
+      - name: Commit sync
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: config sync $(date -u '+%Y-%m-%d')" || true
+          git push
