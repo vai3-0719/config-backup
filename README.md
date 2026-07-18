@@ -1,2 +1,3 @@
-# config-backup
-Configuration files and dotfiles backup
+# Config Backup
+
+Daily configuration backup and dotfiles management.
